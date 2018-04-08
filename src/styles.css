@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+  span {
+        color: #495057;
+        font-family:  "Microsoft YaHei";
+        text-decoration: none;
+        background-color: transparent;
+        -webkit-text-decoration-skip: objects;
+    }
+
+    .card {
+         min-height: calc(100vh - 59px);
+    }
+
+    .width150 {
+        width: 150px;
+    }
+    .width200 {
+        width: 200px;
+    }
+
+    .table td, .table th {
+        padding: .5rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .api-group span:hover {
+        text-decoration: none;
+        color: rgba(0,0,0,.85) !important;
+        cursor: pointer;
+    }
+
+    .sidebar-sticky .nav {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .sidebar-sticky {
+        padding: 0 4px;
+    }
+
+    .sidebar-sticky .bd-toc-link {
+        display: block;
+        padding: .2rem .3rem 0 .3rem;
+        font-weight: 500;
+        color: rgba(0, 0, 0, .65);
+    }
+
+  
+    .sidebar-sticky .bd-toc-item > .bd-sidenav {
+        display: none;
+    }
+
+      .sidebar-sticky .bd-toc-item.active > .bd-toc-link {
+        color: rgba(0, 0, 0, .85);
+    }
+
+
+    .sidebar-sticky .nav > li > span {
+        display: block;
+        padding: 0rem .5rem;
+        font-size: 90%;
+        color: rgba(0, 0, 0, .65);
+    }
+
+    .sidebar-sticky .nav>.active:hover>span, .sidebar-sticky .nav>.active>span {
+        font-weight: 500;
+        color: rgba(0,0,0,.85);
+        background-color: transparent;
+    }
+
+    .api-group {
+        height: calc(100vh - 120px);
+        overflow-y: auto;
+    }
+    .api-group>.collapse>span.bd-toc-link {
+        display: block;
+    }
+    .api-group>div.collapse {
+        display: block;
+    }
+    div.bd-toc-item.active .bd-sidenav {
+        display: block;
+    }
+
+
+.show {
+    display: block !important;
+}
+
+
+.objDefines {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.hide {
+    display: none !important;
+}

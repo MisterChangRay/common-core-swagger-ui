@@ -1,0 +1,29 @@
+<div class="sidebar-sticky">
+    <form >
+        <div class="form-group">
+            <label for="exampleInput"></label>
+            <input type="text" id="searchKey" class="form-control" name="searchKey" [(ngModel)]="searchKey" placeholder="Search...">
+        </div>
+    </form>
+
+     <div class="api-group">
+        <div class="bd-toc-item" [ngClass]="{'active':isSelected(index)}" (click)="selectIndex(index)" *ngFor="let item of apis | apiFilter:searchKey;let index = index">
+            <span class="bd-toc-link" >{{item.name}}</span>
+            <ul class="nav bd-sidenav">
+                <li (click)="showApi(tmp)" *ngFor="let tmp of item.childs"><span>{{tmp.summary}}</span></li>
+            </ul>
+        </div>
+        <!-- 
+        <div class="bd-toc-item active">
+            <span class="bd-toc-link" >角色管理</span>
+            <ul class="nav bd-sidenav">
+                <li class="active"><span>新增角色</span></li>
+                <li><span>编辑角色</span></li>
+                <li><span>删除角色</span></li>
+            </ul>
+        </div>
+         -->
+
+   </div>
+
+</div>
