@@ -3,27 +3,24 @@
 这个项目是美化swagger本身的文档。偏向企业文档
 
 ## how to use
-
 - clone project
 - run `npm start`
 - open your browser on http://localhost:4200/
 
-## Code scaffolding
+## 如何构建
+- `ng build --dev` 构建开发使用项目;(js,html不会压缩打包)
+- `ng build --prod` 构建生产环境项目;(js,html文件会被压缩和打包)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## 如何再swagger项目中使用
+- 复制项目dist目录到你项目中的web容器中
+- 配置目录下的config.js文件
+``` js
+window.appConfigs  = {
+  //swagger后台文档地址
+	swaggerApiUrl : "/v2/api-docs",
+  //debug请求地址
+	debugApiUrl : "http://localhost:8080"
+}
+```
+- 启动你的项目,访问其中下`index.html`文件
