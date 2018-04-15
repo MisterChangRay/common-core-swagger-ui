@@ -36,6 +36,6 @@ window.appConfigs  = {
 
 
 ## 部分截图
-[截图](./screenshot/20180415204009.png)
-[截图](./screenshot/20180415204033.png)
-[截图](./screenshot/20180415204055.png)
+![截图](./screenshot/20180415204009.png)
+![截图](./screenshot/20180415204033.png)
+![截图](./screenshot/20180415204055.png)
