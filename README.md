@@ -9,9 +9,7 @@
 - clone project
 - run `npm start`
 - open your browser on http://localhost:4200/
-- 扩展你自己的代码把
-
-## 如何构建
+- 扩展你自己的代码
 - `ng build --dev` 构建开发使用项目;(js,html不会压缩打包)
 - `ng build --prod` 构建生产环境项目;(js,html文件会被压缩和打包)
 
