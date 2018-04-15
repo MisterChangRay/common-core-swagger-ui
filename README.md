@@ -1,29 +1,36 @@
 # common-core-swagger-ui
 
-这个项目是美化swagger本身的文档。偏向企业文档
+这个项目是美化swagger本身的文档。偏向企业文档;
+增加功能：
+- API检索功能
+- debug优化显示传参
 
-## how to use
-
+## 如何扩展
 - clone project
 - run `npm start`
 - open your browser on http://localhost:4200/
+- 扩展你自己的代码把
 
-## Code scaffolding
+## 如何构建
+- `ng build --dev` 构建开发使用项目;(js,html不会压缩打包)
+- `ng build --prod` 构建生产环境项目;(js,html文件会被压缩和打包)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## 如何在swagger项目中使用
+- 复制项目dist目录到你项目中的web容器中
+- 配置目录下的config.js文件
+``` js
+window.appConfigs  = {
+  //swagger后台文档地址
+	swaggerApiUrl : "/v2/api-docs",
+  //debug请求地址
+	debugApiUrl : "http://localhost:8080"
+}
+```
+- 启动你的项目,访问其中下`index.html`文件
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## 注意事项
+- 使用请确保swagger2版本>=2.6
+- 请不要修改后台swagger2接口访问地址，项目是采用的默认地址：baseUrl + `/v2/api-docs`
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
