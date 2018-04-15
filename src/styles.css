@@ -17,6 +17,9 @@
     .width200 {
         width: 200px;
     }
+    .width300 {
+        width: 300px;
+    }
 
     .table td, .table th {
         padding: .5rem;
@@ -102,4 +105,8 @@
 
 .hide {
     display: none !important;
+}
+
+.form-group {
+    margin-bottom: 0;
 }

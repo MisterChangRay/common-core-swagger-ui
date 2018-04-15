@@ -11,11 +11,11 @@ export class SiderComponent {
 	apis = []; //侧边栏数据
 	selected = {index : 0};
 	searchKey = '';
-	apiInfo = {}; //API详情shuju
+	apiInfo:any = {	}; //API详情shuju
 
 	//在main.component中显示API详情
 	showApi(api) {
-		this.apiInfo = this.apiInfo || {};
+		this.apiInfo = this.apiInfo;
 		this.apiInfo.api = api;
 		this.showApiEvent.emit(this.apiInfo);
 	}

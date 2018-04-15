@@ -49,9 +49,7 @@ export class ApiDocService {
 
 
   getApis() {
-
-    const url = '/assets/result.json'; 
-
+    const url = window["appConfigs"]["swaggerApiUrl"]; 
     return this.http.get(url)   
            .toPromise()    
            .then(res => res.json())   

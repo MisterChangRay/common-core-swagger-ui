@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import JSONFormatter from 'json-formatter-js'
+import { MyHttpService } from '../common/myHttpService';
 
 @Component({
   selector: 'main-component',
@@ -10,10 +11,13 @@ export class MainComponent {
 	tagId:Number = 0;
   popWindowId = 0;
   voObjs;
-  objDefines = {};
+  searchKey;
+  objDefines = {properties:null};
+  formData = {};
   @ViewChild('objDefined') objDefinedContainer: ElementRef
+  @ViewChild('objResult') objResultContainer: ElementRef
 
-  constructor() {
+  constructor(private myHttpService: MyHttpService) {
   }
 
   //解析定义类的名称
@@ -34,6 +38,9 @@ export class MainComponent {
   showApiDescription(apiInfo) {
   	this.api = apiInfo.api || {};
     this.voObjs = apiInfo.voObjs;
+    this.formData = {};
+
+    console.log(apiInfo)
   }
  
 
@@ -44,7 +51,7 @@ export class MainComponent {
     objName = objName.voObjName;
     this.popWindowId = 1;
 
-    this.objDefines = this.voObjs[this.getDefinName(objName)] || {};
+    this.objDefines = this.voObjs[this.getDefinName(objName)];
 
     let el = this.objDefinedContainer.nativeElement 
     el.innerHTML = "";
@@ -59,7 +66,8 @@ export class MainComponent {
   parseParam(obj) {
     let res = {
       type : 1, //1普通文本 2A标签
-      text : ""
+      text : "",
+      voObjName:null
     };
       //处理普通数组参数,基本类型
     if('array'.toLocaleLowerCase() == obj.type && obj.items) {
@@ -69,19 +77,30 @@ export class MainComponent {
           obj.schema = {
             $ref : obj.items.$ref
           }
-          res.type : 2;
+          res.type = 2;
           res.voObjName = obj.schema.$ref;
           res.text = obj.type + "<" + this.getDefinName(obj.schema.$ref)+ ">";
         }
     } else if(obj.schema && this.getDefinName(obj.schema.$ref)) {  //处理普通对象参数
-        res.type : 2;
+        res.type = 2;
         res.voObjName = obj.schema.$ref;
         res.text = this.getDefinName(obj.schema.$ref);
 
     }  else { //普通数据类型
         res.text = obj.type;
     } 
+
     return res;
+  }
+
+
+  //debug时显示的文本框类型
+  getShowType(item) {
+    if(item.in == "body" || item.type == "array") {
+      return 'textarea';
+    } else {
+      return 'text';
+    }
   }
 
     
@@ -92,6 +111,75 @@ export class MainComponent {
 
 
 
+  //发送数据到后台接口
+  sendData() {
 
+    let url = this.api.path;
+    let params = [];
+    let headers = [];
+    if(this.api && this.api.params) {
+      this.api.params.forEach(item => {
+        if(!item.type || item.type == 'array') {
+          params.push({
+              key : item.name,
+              value : this.strToJSON(this.formData[item.name])
+          })
+
+        } else if(item.in == 'path'){
+          var reg = new RegExp("{" + item.name + "}");
+          url = url.replace(reg, this.formData[item.name]);
+        } else if(item.in == 'header'){
+          headers.push({
+              key : item.name,
+              value : this.formData[item.name]
+          })
+        } else {
+          params.push({
+              key : item.name,
+              value : this.formData[item.name]
+          })
+        }
+      })
+    }
+
+    if('get' == this.api.method) {
+      this.myHttpService.get(url,headers, params).then(res => {
+        this.showResult(res);
+      })
+    }
+    if('post' == this.api.method) {
+
+    }
+    if('delete' == this.api.method) {
+
+    }
+    if('putch' == this.api.method) {
+
+    } 
+   
+  }
+
+
+  showResult(obj) {
+    if(!obj) return;
+
+    let el = this.objResultContainer.nativeElement 
+    el.innerHTML = "";
+    const formatter = new JSONFormatter(obj);
+
+    el.appendChild(formatter.render());
+  }
+
+
+
+    strToJSON (str) {
+      let res ;
+        try {
+          res = (new Function("return " + str))(); 
+        } catch(e) {
+          alert("JSON格式错误")
+        }
+        return res;
+    };
  
 }

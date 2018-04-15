@@ -1,10 +1,12 @@
-# MyApp
+# common-core-swagger-ui
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+这个项目是美化swagger本身的文档。偏向企业文档
 
-## Development server
+## how to use
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- clone project
+- run `npm start`
+- open your browser on http://localhost:4200/
 
 ## Code scaffolding
 

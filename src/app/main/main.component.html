@@ -1,4 +1,5 @@
 
+
 <div class="card text-center">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
@@ -86,59 +87,69 @@
         </div>
  		-->
 
-        <!-- 显示对象定义详情 -->
-		<div [ngClass]="{'show':popWindowId == 1}" class="modal" tabindex="-1" role="dialog">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title">对象定义详情</h5>
-		        <button  (click)="close()"  type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body objDefines">
-		        <div>{{objDefines.description}}</div>
-		        <div #objDefined></div>
-		      </div>
-		      <div class="modal-footer">
-		        <button (click)="close()" type="button" class="btn btn-primary">关闭</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+       
 
     </div>
 
       <div class="card-body" [ngClass]="{'collapse':tagId==0}">
-    	<h5 class="card-title text-left">Params</h5>
-    	<div class="form-group">
-		    <textarea class="form-control" placeholder="JSON Object" rows="6"></textarea>
-		</div>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-            <thead>
-			    <tr>
-			      <th scope="col" class="width200">name</th>
-			      <th scope="col" class="width200">value</th>
-			      <th scope="col" class="width200">type</th>
-			      <th scope="col" class="">description</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <td>usernmae</td>
-			      <td><input type="" name=""></td>
-			      <td>string</td>
-			      <td>string</td>
-			    </tr>
-			   
-			  </tbody>
-			</table>
-        </div>
-        <button class="btn btn-primary" type="submit">发送数据</button>
+      	<form name="debug">
+      	
+	    	<h5 class="card-title text-left">Params</h5>
+	        <div class="table-responsive">
+	            <table class="table table-bordered">
+	            <thead>
+				    <tr>
+				      <th scope="col" class="width200">name</th>
+				      <th scope="col" class="width300">value</th>
+				      <th scope="col" class="width200">type</th>
+				      <th scope="col" class="">description</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr  *ngFor="let item of api.params ;let index = index">
+				      <td>{{item.name}}</td>
+				      <td>
+				      	<div class="form-group" [ngClass]="{'hide':getShowType(item)!='text'}">
+				      		<input [(ngModel)]="formData[item.name]" name="{{item.name}}" type="text" class="form-control" placeholder="{{item.required ? '必填' : '非必填'}}" />
+				      	</div>
+				      	 <div class="form-group" [ngClass]="{'hide':getShowType(item)!='textarea'}">
+						    <textarea [(ngModel)]="formData[item.name]" name="{{item.name + '2'}}" class="form-control" placeholder="{{item.required ? '必填' : '非必填'}}, JSON对象" rows="6"></textarea>
+						</div>
+				      </td>
+				      <td>
+				      	<a  (click)='showObj(parseParam(item))' href="javascript:void(0)" title="点击查看详情">{{parseParam(item).text}}</a>
+				  	  </td>
+				      <td>{{item.description}}</td>
+				  	</tr>
+				  </tbody>
+				</table>
+	        </div>
+        </form>
+        <button class="btn btn-primary" (click)="sendData()" type="submit">发送数据</button>
         <h5 class="card-title text-left">Response</h5>
-        <div class="form-group">
-		    <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+        <div class="objDefines" #objResult>
+		  
 		</div>
     </div>
+
+     <!-- 显示对象定义详情 -->
+	<div [ngClass]="{'show':popWindowId == 1}" class="modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">对象定义详情</h5>
+	        <button  (click)="close()"  type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body objDefines">
+	        <div>{{objDefines["description"]}}</div>
+	        <div #objDefined></div>
+	      </div>
+	      <div class="modal-footer">
+	        <button (click)="close()" type="button" class="btn btn-primary">关闭</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>
