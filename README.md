@@ -34,3 +34,8 @@ window.appConfigs  = {
 - 请不要修改后台swagger2接口访问地址，项目是采用的默认地址：baseUrl + `/v2/api-docs`
 
 
+
+## 部分截图
+[截图](./screenshot/20180415204009.png)
+[截图](./screenshot/20180415204033.png)
+[截图](./screenshot/20180415204055.png)
