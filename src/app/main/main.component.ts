@@ -117,13 +117,19 @@ export class MainComponent {
     let url = this.api.path;
     let params = [];
     let headers = [];
+    
     if(this.api && this.api.params) {
       this.api.params.forEach(item => {
-        if(!item.type || item.type == 'array') {
-          params.push({
-              key : item.name,
-              value : this.strToJSON(this.formData[item.name])
-          })
+        if(item.in == 'body' && item.schema) {
+          if(item.schema.type == 'array') {
+            params.push({
+                key : item.name,
+                value : this.strToJSON(this.formData[item.name])
+            })  
+          } else {
+            params = this.strToJSON(this.formData[item.name]);
+          }
+          
 
         } else if(item.in == 'path'){
           var reg = new RegExp("{" + item.name + "}");
@@ -138,24 +144,19 @@ export class MainComponent {
               key : item.name,
               value : this.formData[item.name]
           })
+          headers.push({
+            key : "Content-Type",
+            value : 'application/x-www-form-urlencoded'
+          })
         }
       })
     }
 
-    if('get' == this.api.method) {
-      this.myHttpService.get(url,headers, params).then(res => {
+    if(this.api.method) {
+      this.myHttpService.sendData(this.api.method, url, headers, params).then(res => {
         this.showResult(res);
       })
     }
-    if('post' == this.api.method) {
-
-    }
-    if('delete' == this.api.method) {
-
-    }
-    if('putch' == this.api.method) {
-
-    } 
    
   }
 

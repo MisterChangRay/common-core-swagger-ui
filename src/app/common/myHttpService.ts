@@ -13,9 +13,10 @@ export class MyHttpService {
    constructor(private http: HttpClient) { }    
     
    baseUrl = window["appConfigs"]["debugApiUrl"];
+   methods = {"get":1, "post":1, "put":1, "delete":1, "patch":1};
 
   
-   get(url, header, data) {
+   sendData(method, url, header, data) {
     let headers = new HttpHeaders();
     let params = new HttpParams();
 
@@ -31,19 +32,28 @@ export class MyHttpService {
       })
     }
 
-    return this.http.get(this.baseUrl + url, {headers:headers, params:params}).toPromise();
+
+
+    if(this.methods[method]) {
+      if("get" == method || "delete" == method) {
+        return this.http[method](this.baseUrl + url, {headers:headers, params:params}).toPromise();
+      }
+      if("post" == method || "put" == method || "patch" == method) {
+        if(headers.get("content-type")) {
+          return this.http[method](this.baseUrl + url, params, {headers:headers}).toPromise();
+        } else {
+          return this.http[method](this.baseUrl + url, data, {headers:headers}).toPromise();
+        }
+        
+      }
+
+      
+    } else {
+      console.log("暂时不支持此方法:" + method)
+    }
 
    }
 
-   post(url, header, data) {
 
-   }
-
-   put(url, header, data) {
-
-   }
-
-   delete(url, header, data) {
-
-   }
+   
 }
