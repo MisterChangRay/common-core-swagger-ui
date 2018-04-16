@@ -9,9 +9,7 @@
 - clone project
 - run `npm start`
 - open your browser on http://localhost:4200/
-- 扩展你自己的代码把
-
-## 如何构建
+- 扩展你自己的代码
 - `ng build --dev` 构建开发使用项目;(js,html不会压缩打包)
 - `ng build --prod` 构建生产环境项目;(js,html文件会被压缩和打包)
 
@@ -34,3 +32,8 @@ window.appConfigs  = {
 - 请不要修改后台swagger2接口访问地址，项目是采用的默认地址：baseUrl + `/v2/api-docs`
 
 
+
+## 部分截图
+![截图](./screenshot/20180415204009.png)
+![截图](./screenshot/20180415204033.png)
+![截图](./screenshot/20180415204055.png)
