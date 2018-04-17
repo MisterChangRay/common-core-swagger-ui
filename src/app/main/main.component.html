@@ -110,7 +110,7 @@
 				      <td>{{item.name}}</td>
 				      <td>
 				      	<div class="form-group" [ngClass]="{'hide':getShowType(item)!='text'}">
-				      		<input [(ngModel)]="formData[item.name]" name="{{item.name}}" type="text" class="form-control" placeholder="{{item.required ? '必填' : '非必填'}}" />
+				      		<input [(ngModel)]="formData[item.name]" name="{{item.name}}" type="text" class="form-control" placeholder="{{item.required ? '必填' : '非必填'}}{{item.type == 'array' ? '多个值用,隔开' : ''}}" />
 				      	</div>
 				      	 <div class="form-group" [ngClass]="{'hide':getShowType(item)!='textarea'}">
 						    <textarea [(ngModel)]="formData[item.name]" name="{{item.name + '2'}}" class="form-control" placeholder="{{item.required ? '必填' : '非必填'}}, JSON对象" rows="6"></textarea>

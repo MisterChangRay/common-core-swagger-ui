@@ -22,6 +22,7 @@ export class MainComponent {
 
   //解析定义类的名称
   getDefinName(str) {
+    if(null == str) return "";
     return str.replace(/^#.*\//, "");
   }
 
@@ -81,10 +82,18 @@ export class MainComponent {
           res.voObjName = obj.schema.$ref;
           res.text = obj.type + "<" + this.getDefinName(obj.schema.$ref)+ ">";
         }
-    } else if(obj.schema && this.getDefinName(obj.schema.$ref)) {  //处理普通对象参数
+    } else if(obj.schema) {  //处理普通对象参数
+        let $ref = null;
+        if(obj.schema && 'array' == obj.schema.type) {
+          $ref = obj.schema.items.$ref;
+          res.text = "array<" + this.getDefinName($ref) + ">";
+        } else {
+          $ref = obj.schema.$ref;
+          res.text = this.getDefinName($ref);
+        }
         res.type = 2;
-        res.voObjName = obj.schema.$ref;
-        res.text = this.getDefinName(obj.schema.$ref);
+        res.voObjName = $ref;
+        
 
     }  else { //普通数据类型
         res.text = obj.type;
@@ -96,7 +105,7 @@ export class MainComponent {
 
   //debug时显示的文本框类型
   getShowType(item) {
-    if(item.in == "body" || item.type == "array") {
+    if(item.in == "body") {
       return 'textarea';
     } else {
       return 'text';
@@ -113,23 +122,23 @@ export class MainComponent {
 
   //发送数据到后台接口
   sendData() {
-
     let url = this.api.path;
     let params = [];
     let headers = [];
+    let flag:boolean = true;
+    let requiredMsg = "";
+    this.showResult(null);
     
+
     if(this.api && this.api.params) {
       this.api.params.forEach(item => {
+        if(item.required && !this.formData[item.name]) {
+          requiredMsg += "[" + item.name + "]字段必填\r\n";
+          flag = false;
+          return;
+        }
         if(item.in == 'body' && item.schema) {
-          if(item.schema.type == 'array') {
-            params.push({
-                key : item.name,
-                value : this.strToJSON(this.formData[item.name])
-            })  
-          } else {
-            params = this.strToJSON(this.formData[item.name]);
-          }
-          
+          params = this.strToJSON(this.formData[item.name]);          
 
         } else if(item.in == 'path'){
           var reg = new RegExp("{" + item.name + "}");
@@ -152,20 +161,24 @@ export class MainComponent {
       })
     }
 
-    if(this.api.method) {
+    if(this.api.method && flag == true) {
       this.myHttpService.sendData(this.api.method, url, headers, params).then(res => {
         this.showResult(res);
       })
+    }
+    if(Object.is(flag,false)) {
+      alert(requiredMsg);
     }
    
   }
 
 
   showResult(obj) {
-    if(!obj) return;
-
     let el = this.objResultContainer.nativeElement 
     el.innerHTML = "";
+
+    if(!obj) return;
+  
     const formatter = new JSONFormatter(obj);
 
     el.appendChild(formatter.render());
